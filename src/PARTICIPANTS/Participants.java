@@ -14,6 +14,8 @@ public class Participants extends javax.swing.JFrame {
     /**
      * Creates new form Participants
      */
+    
+    Connection conn;
     public Participants() {
         initComponents();
     }
@@ -65,9 +67,14 @@ public class Participants extends javax.swing.JFrame {
 
         jLabel3.setText("Server IP Address");
 
-        jTextField1.setText("<<Server IP Address>>");
+        jTextField1.setText("127.0.0.1:5544");
 
         jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -258,11 +265,27 @@ public class Participants extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addContainerGap(270, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String socket = jTextField1.getText();
+        // System.out.println(socket.charAt(':')); 
+        String ip = socket.substring(0,socket.indexOf(':'));
+        String port = socket.substring(socket.indexOf(':')+1, socket.length());
+        System.out.println("ip : "+ ip + " port : "+port); 
+        
+        try{
+       conn = new Connection();
+       conn.getConnection(ip, port);
+        }catch(Exception ie){
+            ie.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
